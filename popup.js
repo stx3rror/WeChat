@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //##########################VARIABLES##########################
 
   var my_api_key = "";
+  var roleAI = "Eres un asistente dispuesto a resolver dudas puntuales de la forma más óptima y rápida posible. Responderás en español.";
   const divMain = document.getElementById("main_container");
   //Acordeon Input
   const btnAcordeonInput = document.getElementsByClassName("accs")[0];
@@ -73,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
       Copiar: 'Copiar',
       Borrar: 'Borrar',
       ApiInput : 'Clave API',
-      ToolTipVolver: 'Guardar cambios'
+      ToolTipVolver: 'Guardar cambios',
+      RoleAI: 'Eres un asistente dispuesto a resolver dudas puntuales de la forma más óptima y rápida posible. Responderás en español.'
     },
     Ingles: {
       InvalidAPIKeyException: 'Invalid API key.',
@@ -89,7 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
       Copiar: 'Copy',
       Borrar: 'Clear',
       ApiInput : 'API Key',
-      ToolTipVolver: 'Save Changes'
+      ToolTipVolver: 'Save Changes',
+      RoleAI: 'You are an assistant willing to solve specific doubts in the most optimal and fast way possible. You will respond in English.'
     },
     Chino: {
       InvalidAPIKeyException: '无效的API密钥',
@@ -105,7 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
       Copiar: '复制',
       Borrar: '删除',
       ApiInput : 'API密钥',
-      ToolTipVolver: '保存更改'
+      ToolTipVolver: '保存更改',
+      RoleAI: '你是一位愿意以最优化和最快的方式解决特定问题的助手. 你将用中文回答.'
 
     }};
 
@@ -115,7 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
     loadOutput.style.display = 'block';
     const body = {
       model: "gpt-3.5-turbo",
-      "messages": [{"role": "user", "content": inputText}],
+      "messages": [{"role": "system", "content":roleAI},
+                  {"role": "user", "content": inputText}],
       temperature: 0.3
     };
 
@@ -188,8 +193,8 @@ document.addEventListener('DOMContentLoaded', function() {
     divAjustesBtnVolver.title = ' '+Label[lang]["ToolTipVolver"] ;
     
     labelApiAjustes.innerHTML = Label[lang]["ApiInput"] ;
-
-
+    //Rol de la IA
+    roleAI = Label[lang]["RoleAI"];
   }
 
   function buscarIndicePorValor(coleccion, valor) {
@@ -308,9 +313,10 @@ document.addEventListener('DOMContentLoaded', function() {
   //TODO METER UNA BARRITA DE PROGRESO QUE MUESTRE EL GASTO DE LA APIKEY
   //TODO METER UNA SETTING PARA SETEAR LA CANTIDAD DE TOKENS DE SALIDA (DE MENOS A MAS VELOCIDAD, COMO UNA BARRITA DE PROGRESO PERO MOVIL PARA SELECCIONARLA)
   //TODO METER UNA SETTING PARA SETEAR SI SE QUIERE MEMORIA CON LA IA (MEMORIA MENOS RAPIDA LA RESPUESTA)
-  //TODO METER UN BOTON PARA COPIAR EL TEXTO DEL RESULTADO
+  //TODO METER UN BOTON PARA COPIAR EL TEXTO DEL RESULTADO - LISTO
   //TODO METER UNA SECCION DE LINK (GITHUB, LINKD, PORTFOLIO, EMAIL)
   //TODO METER PAY ME A COFFE DE MAX 1€ (DONATIVO)
+  //TODO AÑADIR UN ROL ESPECIFICO PARA CADA TAREA
 
   //TODO NUNCA METER ANUNCIOS
 
@@ -319,11 +325,12 @@ document.addEventListener('DOMContentLoaded', function() {
   fetch('https://api.replicate.com/v1/predictions', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      Content-Type: 'application/json',
+      Authorization : 'Token '+ r8_KTPptWaiWxv7GhPcK6f4df4WvmyMIYs1FjSWF
     },
     body: JSON.stringify({
-      key1: 'value1',
-      key2: 'value2'
+      version: 'a68b84083b703ab3d5fbf31b6e25f16be2988e4c3e21fe79c2ff1c18b99e61c1', //vicuna-13b
+      input: 'Hola que tal estas'
     })
   })
   .then(response => response.json())
