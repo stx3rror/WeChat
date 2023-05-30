@@ -254,10 +254,6 @@ textarea {
   text-align: center;
 }
 
-#tagIdiomaAjustes option:before{
-  background-image: url("flags/es.png");
-}
-
 .copiar{
   background-color: transparent;
   border: none;
