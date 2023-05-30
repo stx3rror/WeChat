@@ -1,0 +1,272 @@
+/*@import url(https://necolas.github.io/normalize.css/8.0.1/normalize.css);*/
+
+*{
+  box-sizing: border-box;
+}
+
+.loader {
+
+    color: black;
+    font-family: Consolas, Menlo, Monaco, monospace;
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0.8;
+    position: absolute;
+    top: 8px;
+    left: 100px;
+  }
+  .loader:before {
+    content: "{";
+    display: inline-block;
+    animation: pulse 0.4s alternate infinite ease-in-out;
+  }
+  .loader:after {
+    content: "}";
+    display: inline-block;
+    animation: pulse 0.4s 0.3s alternate infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    to {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+  }
+      
+
+/*TODO METER UN DEGRADADO DE FONDO PARA MEJOR VISTA*/
+body{
+  width: 360px;
+  /*background-image: linear-gradient(lightblue, white);*/
+}
+
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+h3{
+  text-align: right;
+  font-weight: 400;
+  color: lightgray;
+}
+
+#main_container {
+  display: none;
+  margin-top: 20px;
+}
+
+textarea {
+  background-color: lightgrey;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  overflow-x: hidden;
+  overflow-y: visible;
+  resize: none;
+  width: 100%;
+  display: inherit;
+  height: 130px;
+}
+
+#inputArea{
+  text-align: none;
+}
+
+#output{
+  text-align: center;
+}
+
+
+#idioma {
+
+  display: inline-block;
+}
+
+
+#errorMessage{
+  color:red;
+  font-size: 10px;
+}
+
+#submitBtn{
+  text-align: center !important;
+  padding: 8px;
+  background-color: white;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  border-radius: 4px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  margin-bottom: 5px;
+}
+
+#submitBtn:active{
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+
+#radioButtons{
+  text-align:left;
+  margin-left: 40px;
+}
+
+.accs{  
+  position: relative;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: white;
+  color: #444;
+  padding: 8px;
+  width: 100%;
+  text-align: left;
+  border:none; 
+  transition: 0.4s;
+  border-color: lightgrey;
+  border-bottom: 1px;
+  border-bottom-style: solid;
+
+}
+
+.accordion:after {
+  transition: 0.6s;
+  transform: rotate(270deg);
+  content: '\2228'; 
+  font-size: 13px;
+  font-weight: 900;
+  color: #777;
+  float: right; 
+}
+
+.active:after {
+    transition: 0.4s;
+    transform: rotate(360deg);
+  }
+
+.panel {
+  
+  display: none;
+  overflow: hidden;
+}
+
+
+#outputLoad{
+  display: none;
+}
+
+.borrar{
+  background-color: transparent;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  float: right;
+}
+
+.borrar:active{
+  color: darkred;
+}
+
+#ajustes{
+  
+  right: 0;
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+#ajustes:after{
+
+  content: '\26ED'; 
+  font-size: 17px;
+  font-weight: 900;
+  color: #777;
+  float: right; 
+}
+
+#ajustes:hover{
+
+  transform: rotate(45deg);
+  transition: 0.3s;
+}
+
+#cont_ajustes{
+  display: none;
+  height: 250px;
+}
+
+.cont_ajustes_fields input{
+  border: none;
+  background-color: transparent;
+  margin-left: 20px;
+  width: 230px;
+  padding: 8px;
+}
+
+.cont_ajustes_fields input:focus{
+  outline: none;
+}
+
+.cont_ajustes_fields{
+  background-color: transparent;
+  padding-left: 8px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid grey;
+}
+
+#cont_ajustes_volver{
+  
+  
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+  float: right;
+}
+
+#cont_ajustes_volver:after{
+
+  content: '\21B6'; 
+  font-size: 17px;
+  font-weight: 900;
+  color: #777;  
+}
+
+#cont_ajustes_volver:after:hover{
+
+  transform: rotate(-45deg);
+  transition: 0.3s;
+}
+
+#tagError {
+  color: red;
+  text-align: right;
+  float: right;
+  text-align: center;
+}
+
+#tagIdiomaAjustes option:before{
+  background-image: url("flags/es.png");
+}
+
+.copiar{
+  background-color: transparent;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  float: left;
+}
+
+.copiar:active{
+  color: darkred;
+}

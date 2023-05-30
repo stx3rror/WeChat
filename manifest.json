@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "RTCC con chatgpt",
+  "version": "1.01",
+  "description": "Resume, Traduce, Corrige y Charla con chatgpt",
+  "action": {
+    "default_title": "RTCC con chatgpt",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "tabs"  
+  ],
+  "host_permissions": [
+   "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["popup.js"]
+    }
+  ],
+  "icons": {
+    "32": "logo32.png"
+  }
+}

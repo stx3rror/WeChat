@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Resumen, Traduccion y Correccion - Extension Chrome</title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
+    <script src="popup.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+
+  <div id="container">
+    
+    <div id="main_container">
+
+      <h1>Resume, Traduce, Corrige y Charla con la IA</h1>
+      <h3>by Guillermo Rueda Padilla v0.9</h3>
+      <button id="ajustes"></button>
+      <div id="radioButtons">
+        <input type="radio" name="opciones" value="summarize" checked> Resumir<br>
+        <input type="radio" name="opciones" value="translate"> Traducir a
+        <select name="idioma" id="idioma" >
+          <option value="Español" selected>español</option>
+          <option value="Ingles">ingles</option>
+          <option value="Catalan">catalan</option>
+          <option value="Portuges">portugués</option>
+          <option value="Chino">chino</option>
+        </select><br>
+        <input type="radio" name="opciones" value="correct"> Corregir<br>
+        <input type="radio" name="opciones" value="gpt"> Chatear<br><br>
+      </div>
+
+      <button id="submitBtn">Enviar</button>
+      <span id="tagError"></span>
+
+      <div class="accs">
+        <button class="accordion">Entrada de texto</button>
+        <div class="panel">
+           <button class="copiar">Copiar</button>
+          <button class="borrar">Borrar</button>
+          <textarea id="inputArea"></textarea>
+        </div>
+      </div>
+
+      <div class="accs">
+        <span class="loader" id="outputLoad"></span>
+        <button class="accordion">Salida de texto</button>
+        <div class="panel">
+          <button class="copiar">Copiar</button>
+          <button class="borrar">Borrar</button>
+          <textarea id="output" disabled></textarea>
+        </div>
+      </div>   
+    </div>
+
+    <div id="cont_ajustes">
+
+      <button id="cont_ajustes_volver" title=""></button>   
+
+      <select id="tagIdiomaAjustes">
+        <option value="Español" selected>ESP</option>
+        <option value="Ingles">UK</option>
+        <option value="Chino">CN</option>
+      </select>
+
+      <br><br>
+      <div class="cont_ajustes_fields">
+        <label id="labelApiAjustes">Clave API</label>
+        <input type="password" placeholder="Introduce tu clave api" id="cont_ajustes_field_api_key">
+      </div>
+
+      
+    </div>
+
+  </div>
+ 
+  </body>
+</html>
