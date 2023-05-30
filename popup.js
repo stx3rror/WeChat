@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
     method: 'POST',
     headers: {
       Content-Type: 'application/json',
-      Authorization : 'Token '+ r8_KTPptWaiWxv7GhPcK6f4df4WvmyMIYs1FjSWF
+      Authorization : 'Token your_api_key'
     },
     body: JSON.stringify({
       version: 'a68b84083b703ab3d5fbf31b6e25f16be2988e4c3e21fe79c2ff1c18b99e61c1', //vicuna-13b
