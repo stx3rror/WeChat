@@ -127,14 +127,15 @@ h1 {
 
 .loader {
 
+  display: none;
   color: black;
   font-family: Consolas, Menlo, Monaco, monospace;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 20px;
   opacity: 0.8;
   position: absolute;
-  top: 8px;
-  left: 100px;
+  top: 2px;
+  left: 116px;
 }
 .loader:before {
   content: "{";
