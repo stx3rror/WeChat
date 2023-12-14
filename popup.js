@@ -3,18 +3,22 @@ document.addEventListener('DOMContentLoaded', function() {
   //##########################VARIABLES##########################
 
   var my_api_key = "";
-  var roleAI = "Eres un asistente dispuesto a resolver dudas puntuales de la forma más óptima y rápida posible. Responderás en español.";
+  //cuando pruebes usa esta
+  //chrome.storage.local.set({ 'api_key': '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' });
+  var roleAI = "Eres un asistente dispuesto a resolver dudas puntuales sin extenderte demasiado. Responderás en español.";
   const divMain = document.getElementById("main_container");
   //Acordeon Input
-  const btnAcordeonInput = document.getElementsByClassName("accs")[0];
+  const btnAcordeonInput = document.getElementsByClassName("accordion")[0];
   const btnCopiarTextAreaInput = document.getElementsByClassName('copiar')[0];
-  const btnBorrarTextAreaInput = document.getElementsByClassName('borrar')[0];
+  const btnBorrarTextAreaInput = document.getElementsByClassName('papelera')[0];
   const tagTextAreaInput = document.getElementById("inputArea");
+  
   //Acordeon Output
-  const btnAcordeonOutput = document.getElementsByClassName("accs")[1];
+  const btnAcordeonOutput = document.getElementsByClassName("accordion")[1];
   const btnCopiarTextAreaOutput = document.getElementsByClassName('copiar')[1];
-  const btnBorrarTextAreaOutput = document.getElementsByClassName('borrar')[1];
-  const tagTextAreaOutput = document.getElementById("output");
+  const btnEscucharTextAreaOutput = document.getElementsByClassName('escuchar')[0];
+  const btnBorrarTextAreaOutput = document.getElementsByClassName('papelera')[1];
+  const tagTextAreaOutput = document.getElementById("outputArea");
   const tagSelectIdioma = document.getElementById("idioma");
   const btnEnviar = document.getElementById('submitBtn');
   const loadOutput =  document.getElementById('outputLoad');
@@ -33,34 +37,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
   //##########################STORAGES##########################
 
-  chrome.storage.local.get(['lang','historico_output','historico_input','api_key']).then((result) => {
-    
-    if(result.historico_output){
-      tagTextAreaOutput.value = result.historico_output;
-    }
-
-    if(result.historico_input){
-      tagTextAreaInput.value = result.historico_input;
-    }
-
-    if(result.api_key){
-      my_api_key=result.api_key;//VARIABLE ENVIADA A OPENAI
-      divAjustesTagApiKey.value = my_api_key;//SE SETA EN EL CAMPO
-    }
-    if(result.lang){
-      lang = result.lang;
-      let indice = buscarIndicePorValor(tagIdiomaAjustes.options,lang);
-      if(indice!=-1){
-        tagIdiomaAjustes.options[indice].selected = true;
+    chrome.storage.local.get(['lang','historico_output','historico_input','api_key','opcion_checks']).then((result) => {
+      
+      if(result.historico_output){
+        tagTextAreaOutput.value = result.historico_output;
       }
-    }
-    reloadLanguage();
-    divMain.style.display = "block";
-  });
+
+      if(result.historico_input){
+        tagTextAreaInput.value = result.historico_input;
+      }
+
+      if(result.api_key){
+        my_api_key=result.api_key;//VARIABLE ENVIADA A OPENAI
+        divAjustesTagApiKey.value = my_api_key;//SE SETA EN EL CAMPO
+      }
+      if(result.lang){
+        lang = result.lang;
+        let indice = buscarIndicePorValor(tagIdiomaAjustes.options,lang);
+        if(indice!=-1){
+          tagIdiomaAjustes.options[indice].selected = true;
+        }
+      }
+
+      if(result.opcion_checks){        
+        array = [...document.getElementsByTagName("input")];
+        for(i=0;i<array.length;i++){
+
+          if(array[i].value == result.opcion_checks){
+            array[i].checked = true;
+            break;
+          }
+        }
+      }
+
+      reloadLanguage();
+      divMain.style.display = "flex";
+    });  
 
   //##########################IDIOMA##########################
   const Label = {
     Español: {
+      CodigoLenguaje : 'es-ES',
       InvalidAPIKeyException: 'Clave API inválida.',
       EmptyTextAreaException: 'Por favor, rellene el campo de entrada con información.',
       TituloExtension: 'Resume, Traduce, Corrige y Charla con la IA',
@@ -72,12 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
       EntradaTexto: 'Entrada de texto',
       SalidaTexto: 'Salida de texto',
       Copiar: 'Copiar',
+      Escuchar: 'Escuchar',
       Borrar: 'Borrar',
       ApiInput : 'Clave API',
       ToolTipVolver: 'Guardar cambios',
       RoleAI: 'Eres un asistente dispuesto a resolver dudas puntuales de la forma más óptima y rápida posible. Responderás en español.'
     },
     Ingles: {
+      CodigoLenguaje : 'en-EN',
       InvalidAPIKeyException: 'Invalid API key.',
       EmptyTextAreaException: 'Please fill in the input field with information.',
       TituloExtension: 'Resume, Translate, Correct, and Chat with AI',
@@ -89,12 +108,14 @@ document.addEventListener('DOMContentLoaded', function() {
       EntradaTexto: 'Text input',
       SalidaTexto: 'Text output',
       Copiar: 'Copy',
+      Escuchar: 'Listen',
       Borrar: 'Clear',
       ApiInput : 'API Key',
       ToolTipVolver: 'Save Changes',
       RoleAI: 'You are an assistant willing to solve specific doubts in the most optimal and fast way possible. You will respond in English.'
     },
     Chino: {
+      CodigoLenguaje : 'zh-CN',
       InvalidAPIKeyException: '无效的API密钥',
       EmptyTextAreaException: '请在输入框中填写信息',
       TituloExtension: '简历、翻译、校对和与人工智能聊天',
@@ -106,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
       EntradaTexto: '文本输入',
       SalidaTexto: '文本输出',
       Copiar: '复制',
+      Escuchar: '听',
       Borrar: '删除',
       ApiInput : 'API密钥',
       ToolTipVolver: '保存更改',
@@ -150,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function replaceSelectedText(newText) {
     tagTextAreaOutput.value = newText;
-    chrome.storage.session.set({ 'historico_output': newText });
+    chrome.storage.local.set({ 'historico_output': newText });
   }
 
   function saveChanges() {
@@ -189,6 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //BOTON DE COPIAR TEXTO
     btnCopiarTextAreaInput.innerHTML = ' '+Label[lang]["Copiar"] ;
     btnCopiarTextAreaOutput.innerHTML = ' '+Label[lang]["Copiar"] ;
+    //btnEscucharTextAreaOutput.innerHTML = ' '+Label[lang]["Escuchar"] ;
     //BOTON VOLVER AL MENU PRINCIPAL
     divAjustesBtnVolver.title = ' '+Label[lang]["ToolTipVolver"] ;
     
@@ -211,9 +234,9 @@ document.addEventListener('DOMContentLoaded', function() {
   //##########################LISTENERS##########################
   
   //Acordeon Input
-  btnAcordeonInput.children[0].addEventListener("click", function() {
+  btnAcordeonInput.addEventListener("click", function() {
 
-    var panelInput = btnAcordeonInput.children[1];
+    var panelInput = document.getElementsByClassName("panel")[0];
     this.classList.toggle('active');
     panelInput.style.display = (panelInput.style.display === "block")?"none":"block";
   });
@@ -232,14 +255,14 @@ document.addEventListener('DOMContentLoaded', function() {
   tagTextAreaInput.addEventListener('change', function(ev) {
 
     var textoInput = tagTextAreaInput.value;
-    chrome.storage.session.set({ 'historico_input': textoInput })
+    chrome.storage.local.set({ 'historico_input': textoInput })
 
   });
 
   //Acordeon Output
-  btnAcordeonOutput.children[1].addEventListener("click", function() {
+  btnAcordeonOutput.addEventListener("click", function() {
 
-    var panelOutput = btnAcordeonOutput.children[2];
+    var panelOutput = document.getElementsByClassName("panel")[1];
     this.classList.toggle('active');
     panelOutput.style.display = (panelOutput.style.display === "block")?"none":"block";
   });
@@ -249,6 +272,11 @@ document.addEventListener('DOMContentLoaded', function() {
     navigator.clipboard.writeText(tagTextAreaOutput.value);
   });
 
+  // btnEscucharTextAreaOutput.addEventListener('click',function(ev){
+    
+  //   text2speech(tagTextAreaOutput.value);
+  // });
+
   btnBorrarTextAreaOutput.addEventListener("click",function(ev){
 
     tagTextAreaOutput.value = '';
@@ -257,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   tagTextAreaOutput.addEventListener('change', function(ev) {
 
-    chrome.storage.session.set({ 'historico_output': tagTextAreaOutput.value })
+    chrome.storage.local.set({ 'historico_output': tagTextAreaOutput.value })
 
   });
 
@@ -267,6 +295,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if(textoIntroducidoPorUsuario != null && textoIntroducidoPorUsuario != ''){//SOLO SI LA EN EL OUTPUT SE ENCUENTRA TEXTO INTRODUCIDO POR EL USUARIO SE MANDARA A OPENAI
 
       const selectedAction = document.querySelector('input[name="opciones"]:checked').value;
+      //12-12-2023 - me guardo la opcion seleccionada en cache para mas comodidad
+      chrome.storage.local.set({ 'opcion_checks': selectedAction })
       
       switch (selectedAction) {
         case 'summarize':
@@ -295,6 +325,13 @@ document.addEventListener('DOMContentLoaded', function() {
     divMain.style.display = "none";
   });
 
+  tagIdiomaAjustes.addEventListener("change",function(ev){
+
+    lang = tagIdiomaAjustes.selectedOptions[0].value;
+    chrome.storage.local.set({ 'lang': lang });
+    reloadLanguage();
+  });
+
   divAjustesBtnVolver.addEventListener("click",function(ev){
 
     saveChanges();
@@ -304,6 +341,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   ///##########################OTROS##########################
 
+  function text2speech(mensaje_a_decir) {
+    var msg = new SpeechSynthesisUtterance();
+    var voices = window.speechSynthesis.getVoices();
+    //es para buscar en la lista de voces aquella que tenga el codigo de lenguaje seleccionado se añade el msg.voices para comprobar cuando ya se ha encontrado y asigando el valor para hacer una especie de break en el forEach, ya que de forma nativa no se puede romper
+    voices.forEach(function(k,v){
+      if (k["lang"] == Label[lang]["CodigoLenguaje"] && msg.voice == null){  msg.voice = voices[voices.indexOf(k)];}
+    })
+    msg.voiceURI = "native";
+    msg.volume = 1;
+    msg.rate = 1;
+    msg.pitch = 0.8;
+    msg.text = mensaje_a_decir;
+    msg.lang = Label[lang]["CodigoLenguaje"];
+    speechSynthesis.speak(msg);
+  }
 
   //##########################OBJETIVOS PENDIENTES##########################
 
@@ -326,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
     method: 'POST',
     headers: {
       Content-Type: 'application/json',
-      Authorization : 'Token your_api_key'
+      Authorization : 'Token '+ r8_KTPptWaiWxv7GhPcK6f4df4WvmyMIYs1FjSWF
     },
     body: JSON.stringify({
       version: 'a68b84083b703ab3d5fbf31b6e25f16be2988e4c3e21fe79c2ff1c18b99e61c1', //vicuna-13b

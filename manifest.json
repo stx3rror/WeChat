@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "RTCC con chatgpt",
-  "version": "1.01",
+  "version": "1.1",
   "description": "Resume, Traduce, Corrige y Charla con chatgpt",
   "action": {
     "default_title": "RTCC con chatgpt",
@@ -23,6 +23,6 @@
     }
   ],
   "icons": {
-    "32": "logo32.png"
+    "128": "logo128.png"
   }
 }
