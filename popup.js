@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
       CodigoLenguaje : 'es-ES',
       InvalidAPIKeyException: 'Clave API inválida.',
       EmptyTextAreaException: 'Por favor, rellene el campo de entrada con información.',
+      InsufficientQuotaAreaException: 'Has excedido el saldo de tu cartera, Por favor comprueba tu plan y tu plan de pago.',
       TituloExtension: 'Resume, Traduce, Corrige y Charla con la IA',
       Resumir: 'Resumir',
       Traducir: 'Traducir a ',
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Ingles: {
       CodigoLenguaje : 'en-EN',
       InvalidAPIKeyException: 'Invalid API key.',
+      InsufficientQuotaAreaException: 'You have exceeded your wallet balance, please check your plan and your payment plan.',
       EmptyTextAreaException: 'Please fill in the input field with information.',
       TituloExtension: 'Resume, Translate, Correct, and Chat with AI',
       Resumir: 'Summarize',
@@ -117,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Chino: {
       CodigoLenguaje : 'zh-CN',
       InvalidAPIKeyException: '无效的API密钥',
+      InsufficientQuotaAreaException: '您已超出钱包余额，请检查您的计划和付款计划.',
       EmptyTextAreaException: '请在输入框中填写信息',
       TituloExtension: '简历、翻译、校对和与人工智能聊天',
       Resumir: '恢复 ',
@@ -158,17 +161,53 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(data => {
         loadOutput.style.display = 'none';
         if(data.error){
-          if(data.error.code === "invalid_api_key"){
-            console.log('Error: Clave API invalida!');
-            setErrorMessage("InvalidAPIKeyException");
+          switch (data.error.code) {
+            case 'invalid_api_key':
+              console.log('Error: Clave API invalida!');
+              setErrorMessage("InvalidAPIKeyException");
+              break;
+            case 'insufficient_quota':
+              console.log('Error: Superado limite monetario!');
+              setErrorMessage("InsufficientQuotaAreaException");
+              break;
+
+            default:
+              console.log('Error: Error desconocido comprueba el data.error!');
           }
         }
+        
         var generatedText = data.choices[0].message.content;
         console.log('response: '+generatedText);
         replaceSelectedText(generatedText);
       })
       .catch(error => {});
   }
+
+  // fetch("https://chatgpt-api.shn.hk/v1/", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       // Authorization: "Bearer "+my_api_key
+
+  //     },
+  //     body: JSON.stringify(body)
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       loadOutput.style.display = 'none';
+  //       if(data.error){
+  //         if(data.error.code === "invalid_api_key"){
+  //           console.log('Error: Clave API invalida!');
+  //           setErrorMessage("InvalidAPIKeyException");
+  //         }
+  //       }
+  //       var generatedText = data.choices[0].message.content;
+  //       console.log('response: '+generatedText);
+  //       replaceSelectedText(generatedText);
+  //     })
+  //     .catch(error => {});
+  // }
+
 
   function replaceSelectedText(newText) {
     tagTextAreaOutput.value = newText;
@@ -356,6 +395,17 @@ document.addEventListener('DOMContentLoaded', function() {
     msg.lang = Label[lang]["CodigoLenguaje"];
     speechSynthesis.speak(msg);
   }
+
+  /*window.addEventListener("keyup",function(){
+    chrome.windows.getAll(windows => {
+      windows.forEach(function(window){
+        chrome.tabs.query({id: window.Id}, tab => {
+          console.log('Ventana: '+window);
+          console.log('Pestaña: '+tab);
+        });
+      });
+    });
+  });*/
 
   //##########################OBJETIVOS PENDIENTES##########################
 
