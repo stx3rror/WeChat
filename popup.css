@@ -73,6 +73,10 @@ h1 {
   width: 200px;
 }
 
+#submitBtn:hover {
+  cursor:pointer;
+}
+
 #group_accs{
   display: flex;
 }

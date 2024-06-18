@@ -378,6 +378,12 @@ document.addEventListener('DOMContentLoaded', function() {
     divMain.style.display = "block";
   });
 
+  document.addEventListener("keyup",function(keyPressed){
+    if(keyPressed.ctrlKey && (keyPressed.key == 'Enter' || keyPressed.key == 'Intro')){
+      btnEnviar.click();
+    }
+  });
+
   ///##########################OTROS##########################
 
   function text2speech(mensaje_a_decir) {
@@ -445,6 +451,8 @@ document.addEventListener('DOMContentLoaded', function() {
 */
 
 });
+
+   
 
   
   
