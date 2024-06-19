@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnAcordeonInput = document.getElementsByClassName("accordion")[0];
   const btnCopiarTextAreaInput = document.getElementsByClassName('copiar')[0];
   const btnBorrarTextAreaInput = document.getElementsByClassName('papelera')[0];
+  const btnEscucharTextAreaInput = document.getElementsByClassName('escuchar')[0];
   const tagTextAreaInput = document.getElementById("inputArea");
   
   //Acordeon Output
   const btnAcordeonOutput = document.getElementsByClassName("accordion")[1];
   const btnCopiarTextAreaOutput = document.getElementsByClassName('copiar')[1];
-  const btnEscucharTextAreaOutput = document.getElementsByClassName('escuchar')[0];
+  const btnEscucharTextAreaOutput = document.getElementsByClassName('escuchar')[1];
   const btnBorrarTextAreaOutput = document.getElementsByClassName('papelera')[1];
   const tagTextAreaOutput = document.getElementById("outputArea");
   const tagSelectIdioma = document.getElementById("idioma");
@@ -90,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
       EntradaTexto: 'Entrada de texto',
       SalidaTexto: 'Salida de texto',
       Copiar: 'Copiar',
-      Escuchar: 'Escuchar',
       Borrar: 'Borrar',
       ApiInput : 'Clave API',
       ToolTipVolver: 'Guardar cambios',
@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
       EntradaTexto: 'Text input',
       SalidaTexto: 'Text output',
       Copiar: 'Copy',
-      Escuchar: 'Listen',
       Borrar: 'Clear',
       ApiInput : 'API Key',
       ToolTipVolver: 'Save Changes',
@@ -130,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
       EntradaTexto: '文本输入',
       SalidaTexto: '文本输出',
       Copiar: '复制',
-      Escuchar: '听',
       Borrar: '删除',
       ApiInput : 'API密钥',
       ToolTipVolver: '保存更改',
@@ -250,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
     //BOTON DE COPIAR TEXTO
     btnCopiarTextAreaInput.innerHTML = ' '+Label[lang]["Copiar"] ;
     btnCopiarTextAreaOutput.innerHTML = ' '+Label[lang]["Copiar"] ;
-    //btnEscucharTextAreaOutput.innerHTML = ' '+Label[lang]["Escuchar"] ;
     //BOTON VOLVER AL MENU PRINCIPAL
     divAjustesBtnVolver.title = ' '+Label[lang]["ToolTipVolver"] ;
     
@@ -291,6 +288,10 @@ document.addEventListener('DOMContentLoaded', function() {
     tagTextAreaInput.dispatchEvent(new Event("change"));//disparo el evento change para que mi listener se ejecute
   });
 
+  btnEscucharTextAreaInput.addEventListener('click',function(ev){
+    text2speech(tagTextAreaInput.value);
+  });
+
   tagTextAreaInput.addEventListener('change', function(ev) {
 
     var textoInput = tagTextAreaInput.value;
@@ -311,10 +312,10 @@ document.addEventListener('DOMContentLoaded', function() {
     navigator.clipboard.writeText(tagTextAreaOutput.value);
   });
 
-  // btnEscucharTextAreaOutput.addEventListener('click',function(ev){
+  btnEscucharTextAreaOutput.addEventListener('click',function(ev){
     
-  //   text2speech(tagTextAreaOutput.value);
-  // });
+    text2speech(tagTextAreaOutput.value);
+  });
 
   btnBorrarTextAreaOutput.addEventListener("click",function(ev){
 

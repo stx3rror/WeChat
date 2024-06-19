@@ -3,7 +3,7 @@
 /*  BETA VERSION  */
 
 #container {
-  width: 510px;
+  width: 540px;
 }
 
 #main_container {
@@ -79,33 +79,38 @@ h1 {
 
 #group_accs{
   display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 520px;
 }
 
-.accs{  
-  position: relative;
+.accs{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 250px;
 }
 
-.output {
-  position: relative;
-  left: -100px;
+.button_bar{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 250px;
 }
+
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-  width: 100%;
+
+  text-align: left;
   background-color: transparent;
   color: #444;
-  text-align: left;
-  position: absolute;
-  width: 130px;
+  width: inherit;
   height: inherit;
-  top: 0;
-  left: 0;
   border:none; 
-  border-color: lightgrey;
-  padding: 0;
-  z-index: 1;
-  margin-left: 10px;
 }
 
 .accordion:hover {
@@ -124,7 +129,7 @@ h1 {
 } */
 
 .panel {
-  
+  width: inherit;
   display: none;
   overflow: hidden;
 }
@@ -159,76 +164,28 @@ h1 {
   }
 }
 
-.parallelogram_container_input {
-  position: relative;
+.label_square_button {
   display: flex;
-  width: 360px;
-  height: 30px;
-  margin-bottom: 5px;
-}
-
-.parallelogram {
-  height: inherit;
-  width: 180px;
-  clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
-  background: black;
-}
-
-.pseudoBorder_parallelogram {
-  position: absolute;
-  background: white;
-  width: 180px;
-  height: inherit;
-  top: 0;
-  left: 0;
-  clip-path: polygon(1% 4%, 99% 4%, 75% 98%, 1% 98%);
-}
-
-.parallelogram_container_input_delete {
-  position: relative;
-  display: flex;
+  flex-direction: row;
   justify-content: center;
-  width: 65px;
-  height: 30px;
-  margin-bottom: 10px;
-  background-color: transparent;
-  left: -40px;
-}
-
-.parallelogram_delete {
-  height: inherit;
-  width: inherit;
-  clip-path: polygon(68% 0%, 100% 0%, 100% 100%, 0% 100%);
-  background: black;
-}
-
-.pseudoBorder_parallelogram_delete {
-  position: absolute;
   background: white;
-  width: inherit;
-  height: inherit;
-  top: 0;
-  left: 0;
-  clip-path: polygon(68% 2%, 98% 2%, 98% 98%, 2% 98%);
+  border: 1px solid black;
+  width: 100%;
+  height: 28px;
+  margin-right: 2px;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
-.papelera{
-  height: 25px;
-  width: 25px;
-  position: relative; 
-  left: -65px;
-  top: 3px;
-  z-index: 1;
-  background-color: transparent;
-}
-
-.papelera:hover {
+.label_square_button:hover{
   cursor: pointer;
 }
 
-.copy_container{
-  position: relative; 
-  left: -63px;
+.square_button {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-right: 2px;
   background: white;
   border: 1px solid black;
   width: 30px;
@@ -236,13 +193,7 @@ h1 {
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
-.copiar {
-  margin-left: 1px;
-  height: 30px;
-  width: 30px;
-}
-
-.copiar:hover {
+.square_button:hover{
   cursor: pointer;
 }
 
@@ -269,22 +220,13 @@ h1 {
   animation: pulse 0.4s 0.3s alternate infinite ease-in-out;
 }
 
-#inputArea{
-  margin-top: 0;
+textarea{
+  margin-top: 2px;
   min-height: 100px;
   max-height: 300px;
-  min-width: 233px;
-  max-width: 233px;
-  font-size: 15px;
-}
-
-#outputArea {
-  margin-top: 0;
-  min-height: 100px;
-  max-height: 300px;
-  min-width: 233px;
-  max-width: 233px;
-  font-size: 15px;
+  min-width: calc(100% - 7px);
+  max-width: calc(100% - 7px);
+  font-size: 14px;
 }
 
 #cont_ajustes_volver{
