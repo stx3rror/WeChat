@@ -165,6 +165,7 @@ h1 {
 }
 
 .label_square_button {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
