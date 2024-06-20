@@ -2,6 +2,10 @@
 
 /*  BETA VERSION  */
 
+body{
+  background-color: #D8EFD3;
+}
+
 #container {
   width: 540px;
 }
@@ -70,11 +74,20 @@ h1 {
 #submitBtn{
   margin-bottom: 10px;
   border-radius: 5px;
+  border-style: solid;
+  border-color: #95D2B3;
   width: 200px;
+  box-shadow: 3px 2px #55AD9B;
+  background-color: #D8EFD3;
 }
 
 #submitBtn:hover {
   cursor:pointer;
+}
+
+#submitBtn:active{
+  border-color: #95D2B3;
+  box-shadow: 1px 1px #55AD9B;
 }
 
 #group_accs{
@@ -101,6 +114,9 @@ h1 {
   width: 250px;
 }
 
+input[type="radio"]{
+  background-color: #D8EFD3;
+}
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
@@ -169,8 +185,9 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background: white;
-  border: 1px solid black;
+  background-color: #D8EFD3;
+  border: 2px solid #55AD9B;
+  border-radius: 4px 4px 0px 0px;
   width: 100%;
   height: 28px;
   margin-right: 2px;
@@ -181,14 +198,20 @@ h1 {
   cursor: pointer;
 }
 
+.label_square_button button{
+  color:black;
+  font-weight: 500;
+}
+
 .square_button {
 
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-right: 2px;
-  background: white;
-  border: 1px solid black;
+  background-color: #D8EFD3;
+  border: 2px solid #55AD9B;
+  border-radius: 4px 4px 0px 0px;
   width: 30px;
   height: 28px;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
@@ -222,12 +245,22 @@ h1 {
 }
 
 textarea{
-  margin-top: 2px;
+  
   min-height: 100px;
   max-height: 300px;
-  min-width: calc(100% - 7px);
-  max-width: calc(100% - 7px);
+  
+  min-width: calc(100% - 9px);
+  max-width: calc(100% - 9px);
   font-size: 14px;
+
+  border-right: 2px;
+  border-left: 2px;
+  border-bottom: 2px;
+  border-style: solid;
+  border-color: #55AD9B;
+  border-radius: 0px 0px 4px 4%;
+  
+  background-color: #D8EFD3;  
 }
 
 #cont_ajustes_volver{
