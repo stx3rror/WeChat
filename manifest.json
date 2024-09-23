@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "RTCC con chatgpt",
+  "name": "WeChat",
   "version": "1.1",
   "description": "Resume, Traduce, Corrige y Charla con chatgpt",
   "action": {
-    "default_title": "RTCC con chatgpt",
+    "default_title": "WeChat",
     "default_popup": "popup.html"
   },
   "permissions": [
